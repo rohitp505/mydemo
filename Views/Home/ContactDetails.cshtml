@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "ContactDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>ContactDetails</h2>*@
+@{
+    ViewBag.Title = "ContactInfo";
+}
+@Html.AntiForgeryToken()
+@*<h4>Register</h4>*@
+<hr />
+
+@Html.ValidationSummary()
+<div class="form-group selectionRadio">
+    <input type="radio" name="CRUD" id="isCreate" value="Create " checked data-bind="click:Allusers" /><span class="radioHeader">Create</span>
+    <input type="radio" name="CRUD" id="isRead" value="Read " data-bind="click:Allusers" /><span class="radioHeader">Read</span>
+    <input type="radio" name="CRUD" id="isUpdate" value="Update " data-bind="click:Allusers" /><span class="radioHeader">Update</span>
+    <input type="radio" name="CRUD" id="isDelete" value="Delete " data-bind="click:Allusers" /><span class="radioHeader">Delete</span>
+    <div class="col-md-10">
+    </div>
+</div>
+<div class="alert alert-info alert-dismissible fade in">
+    <b>Note: </b>For update an account please read the account details and then Update it.<br />
+</div>
+<div class="col-lg-12 containercss">
+
+    <div id="emaildiv">
+        <label for="lname">Email</label>
+
+        <input type="email" data-bind="value:Email" placeholder="Email (required)" id="txtEmail" class="form-control" required />
+
+
+    </div>
+
+    <div id="exceptEmaildiv">
+        <label for="fname">First Name</label>
+        <input type="text" data-bind="value:First_Name" required placeholder="First Name (required)" class="form-control" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" />
+        <label for="lname">Last Name</label>
+        <input type="text" data-bind="value:Last_Name" required accept="text" placeholder="Last Name (required)" class="form-control" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" />
+
+        <label for="lname">Phone No</label>
+        <input type="number" data-bind="value:Phone_No" required maxlength="11" placeholder="Phone No.(required)" class="form-control" id="phno" pattern="/^[0-9]+$/" />
+
+    </div>
+    @*<div><span id="errorMessage"></span></div>*@
+    <br />
+    <input id="btnAction" type="submit"  data-bind="click:CRUD" value="Create" />
+</div>
+
+
+<div>
+    <div class="modal warning" id="DeleteConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content modal-content-Alignment">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="$('#DeleteConfirmation').toggle();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-header red-font">Error! <span id="Deletecount"></span></h4>
+
+                </div>
+
+                <div class="modal-body" style="max-height: 300px;">
+
+
+                    <table id="tblblkemails" style="margin: 0 auto; margin: 0px auto; min-width: 500px;">
+                        <thead class="table-heading">
+                            <tr><th class="UserModelHeader">Email</th><th class="UserModelHeader">Account ID</th><th class="UserModelHeader">Action</th></tr>
+                        </thead>
+                        <tbody class="table-bordered"></tbody>
+                    </table>
+                    <div id="emailErrorMessage" style="display:none," class="red-font"></div>
+
+                </div>
+
+
+                <div class="modal-footer revokeAccessModalBtnContainer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/knockout-3.4.2.js"></script>
+<script src="~/Scripts/VMContactCRUD.js"></script>
+<script>
+
+
+
+    $(document).ready(function () {
+
+        var model = [];
+
+
+        var appUsersVM = new ContactViewViewModel(model, "", "", "", "");
+        ko.applyBindings(appUsersVM);
+        $("#contentTable").show();
+
+
+
+
+    });
+</script>
+
